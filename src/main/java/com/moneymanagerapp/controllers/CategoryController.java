@@ -3,6 +3,7 @@ package com.moneymanagerapp.controllers;
 import com.moneymanagerapp.dto.CategoryDto;
 import com.moneymanagerapp.services.CategoryService;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,8 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping("/category")
 public class CategoryController {
-    @Resource
+
+    @Autowired
     private CategoryService categoryService;
 
     @GetMapping("/all")

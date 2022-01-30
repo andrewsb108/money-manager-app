@@ -2,8 +2,10 @@ package com.moneymanagerapp.controllers;
 
 import com.moneymanagerapp.dto.CategoryDto;
 import com.moneymanagerapp.services.CategoryService;
-import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,25 +14,30 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import javax.annotation.Resource;
+import javax.validation.Valid;
 
-@Log4j2
+@Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/category")
 public class CategoryController {
 
-    @Autowired
-    private CategoryService categoryService;
+    private final CategoryService categoryService;
 
     @GetMapping("/all")
-    public List<CategoryDto> getAllCategories() {
-        return categoryService.getAll();
+    public ResponseEntity<List<CategoryDto>> getAllCategories() {
+        List<CategoryDto> getAllCategories = categoryService.getAll();
+        return new ResponseEntity<>(getAllCategories, HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public String createCategory(@RequestBody CategoryDto categoryDto) {
-        categoryService.createCategory(categoryDto);
-        return "";
+    public ResponseEntity<CategoryDto> createCategory(@Valid @RequestBody CategoryDto categoryDto) {
+
+        CategoryDto dto = categoryService.createCategory(categoryDto);
+        log.info("Category was created");
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+
     }
 
     @PostMapping("/update")

@@ -2,23 +2,25 @@ package com.moneymanagerapp.services;
 
 import com.moneymanagerapp.domain.Category;
 import com.moneymanagerapp.dto.CategoryDto;
+import com.moneymanagerapp.exceptions.CategoryAlreadyExistException;
 import com.moneymanagerapp.mapper.BusinessMapper;
 import com.moneymanagerapp.repository.CategoryRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import javax.annotation.Resource;
 
 @Slf4j
+@RequiredArgsConstructor
 @Service
 public class CategoryServiceImpl implements CategoryService {
-    @Resource
-    private CategoryRepository categoryRepository;
 
-    @Resource
-    private BusinessMapper mapper;
+    private static final String CATEGORY_ALREADY_CREATED = "Category already created";
+
+    private final CategoryRepository categoryRepository;
+    private final BusinessMapper mapper;
 
     @Override
     public List<CategoryDto> getAll() {
@@ -28,11 +30,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public String createCategory(CategoryDto categoryDto) {
-        Category category = mapper.toCategoryEntity(categoryDto);
-        Category savedCategory = categoryRepository.save(category);
-
-        return savedCategory.getId() != 0 ? "Created" : "Not created";
+    public CategoryDto createCategory(CategoryDto categoryDto) {
+        try {
+            Category category = mapper.toCategoryEntity(categoryDto);
+            log.info("Created category " + category);
+            Category savedCategory = categoryRepository.save(category);
+            return mapper.toCategoryDto(savedCategory);
+        } catch (Exception e) {
+            log.info("Category already created {}", e.getMessage());
+            throw new CategoryAlreadyExistException(CATEGORY_ALREADY_CREATED);
+        }
     }
 
     @Override

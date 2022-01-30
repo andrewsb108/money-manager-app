@@ -2,6 +2,7 @@ package com.moneymanagerapp.domain;
 
 import com.moneymanagerapp.domain.enums.TransactionsType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ import javax.persistence.Table;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Entity
 @Table(name = "transactions")
 public class Transaction {

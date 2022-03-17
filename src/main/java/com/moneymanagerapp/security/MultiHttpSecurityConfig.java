@@ -39,7 +39,7 @@ public class MultiHttpSecurityConfig {
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .csrf()
-                        .disable()
+                    .disable()
                     .antMatcher("/api/**")
                     .authorizeRequests()
                         .antMatchers("/api/v1/registration/signup").permitAll()

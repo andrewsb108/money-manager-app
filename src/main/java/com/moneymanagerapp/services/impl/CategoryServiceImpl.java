@@ -1,10 +1,11 @@
-package com.moneymanagerapp.services;
+package com.moneymanagerapp.services.impl;
 
 import com.moneymanagerapp.domain.Category;
 import com.moneymanagerapp.dto.CategoryDto;
 import com.moneymanagerapp.exceptions.CategoryAlreadyExistException;
 import com.moneymanagerapp.mapper.BusinessMapper;
 import com.moneymanagerapp.repository.CategoryRepository;
+import com.moneymanagerapp.services.CategoryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

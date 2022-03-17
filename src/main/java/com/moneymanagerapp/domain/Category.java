@@ -36,4 +36,5 @@ public class Category {
 
     private LocalDate localDate;
 
+    private int userId;
 }

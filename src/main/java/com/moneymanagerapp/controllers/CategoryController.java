@@ -37,7 +37,6 @@ public class CategoryController {
         log.info("Category was created");
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
-
     }
 
     @PostMapping("/update")

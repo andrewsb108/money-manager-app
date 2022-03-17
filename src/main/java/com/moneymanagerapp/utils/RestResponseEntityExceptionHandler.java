@@ -15,12 +15,12 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 public class RestResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler({CategoryAlreadyExistException.class})
-    public ResponseEntity<GenericErrorResponse> handleCategoryAlreadyExistException(CategoryAlreadyExistException e,
+    public ResponseEntity<GenericErrorResponse> handleCategoryAlreadyExistException(Exception e,
                                                                                     WebRequest request) {
         GenericErrorResponse errorResponse = buildErrorResponse(e.getMessage());
         log.error("event=CategoryAlreadyExistException={}, errorResponse={}, request={}", errorResponse, e, request);
 
-        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
     }
 
     private static GenericErrorResponse buildErrorResponse(String errorMessage) {
